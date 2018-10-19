@@ -23,6 +23,5 @@ for line in lines:
 		a = 1
 	if "project-name" in line:
 		project = line.split('name">')[1].split("<")[0]
-		if not "Sap-IST" in directory:
-			out.write("https://git.ulisboa.pt/" + directory + "/" +project + ".git\n")
+		out.write("https://git.ulisboa.pt/" + directory + "/" +project + ".git\n")
 out.close()
