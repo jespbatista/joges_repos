@@ -8,7 +8,7 @@ def  open_url(url, token):
 	response=urllib.request.urlopen(Request,timeout=100)
 	return  response.read().decode("utf-8")
 
-lines = open_url("https://git.ulisboa.pt", argv[1]).split("\n")
+lines = open_url("https://git.ulisboa.pt", "_gitlab_session="+argv[1]).split("\n")
 
 
 out = open("joget_repos","w")
