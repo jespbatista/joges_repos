@@ -8,20 +8,15 @@ def  open_url(url, token):
 	response=urllib.request.urlopen(Request,timeout=100)
 	return  response.read().decode("utf-8")
 
-lines = open_url("https://git.ulisboa.pt", "_gitlab_session="+argv[1]).split("\n")
-
+lines = open_url("https://git.ulisboa.pt/api/v4/projects?simple=true&per_page=50&scope=workflow", "_gitlab_session="+argv[1]).split("\n")
+lines = lines[0].split('"id":')
+lines.pop(0)
 
 out = open("joget_repos","w")
-directory = ""
-project = ""
-a = 0
+
 for line in lines:
-	if a == 1:
-		a = 0
-		directory = line.strip().replace(" ","")
-	if "namespace-name" in line:
-		a = 1
-	if "project-name" in line:
-		project = line.split('name">')[1].split("<")[0]
-		out.write("https://git.ulisboa.pt/" + directory + "/" +project + ".git\n")
+	if "workflow" in line:
+		line = line.split('http_url_to_repo":"')[1]
+		line = line.split('","')[0]
+		out.write(line + "\n")
 out.close()
